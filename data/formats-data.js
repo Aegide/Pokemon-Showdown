@@ -4903,6 +4903,25 @@ let BattleFormatsData = {
 		isNonstandard: "Custom",
 		tier: "Illegal",
 	},
+
+	//League of legends
+
+	alistar: {
+		tier: "OU",
+	},
+	amumu: {
+		tier: "OU",
+	},
+	anivia: {
+		tier: "OU",
+	},
+	ezreal: {
+		tier: "OU",
+	},
+	garen: {
+		tier: "OU",
+	},
+
 };
 
 exports.BattleFormatsData = BattleFormatsData;
