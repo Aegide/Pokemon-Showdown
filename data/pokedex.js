@@ -16316,7 +16316,7 @@ let BattlePokedex = {
 	garen: {
 		num: -1034,
 		name: "Garen",
-		types: ["Grass", "Steel"],
+		types: ["Fighting", "Steel"],
 		genderRatio: {M: 0.875, F: 0.125},
 		baseStats: {hp: 88, atk: 107, def: 122, spa: 74, spd: 75, spe: 64},
 		abilities: {0: "Overgrow"},
