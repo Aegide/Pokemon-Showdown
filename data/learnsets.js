@@ -78412,6 +78412,42 @@ let BattleLearnsets = {
 			{generation: 5, level: 47, moves: ["darkpulse", "flamethrower", "hyperbeam", "icebeam"]},
 		],
 	},
+
+
+	// League of Legends
+
+	alistar: {
+		eventData: [
+			{generation: 5, level: 1, moves: ["headbutt"]},
+		],
+	},
+
+	amumu: {
+		eventData: [
+			{generation: 5, level: 1, moves: ["vinewhip"]},
+		],
+	},
+
+
+	anivia: {
+		eventData: [
+			{generation: 5, level: 1, moves: ["blizzard"]},
+		],
+	},
+
+	ezreal: {
+		eventData: [
+			{generation: 5, level: 1, moves: ["aurasphere"]},
+		],
+	},
+
+	garen: {
+		eventData: [
+			{generation: 5, level: 100, moves: ["sacredsword"]},
+		],
+	},
+
+
 };
 
 exports.BattleLearnsets = BattleLearnsets;
