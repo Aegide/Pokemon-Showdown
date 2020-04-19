@@ -11362,7 +11362,7 @@ let BattlePokedex = {
 		num: 681,
 		name: "Aegislash",
 		baseForme: "Shield",
-		types: ["Steel", "Ghost"],
+		types: ["Fire", "Ice"],
 		baseStats: {hp: 60, atk: 50, def: 140, spa: 50, spd: 140, spe: 60},
 		abilities: {0: "Stance Change"},
 		heightm: 1.7,
@@ -11379,7 +11379,7 @@ let BattlePokedex = {
 		name: "Aegislash-Blade",
 		baseSpecies: "Aegislash",
 		forme: "Blade",
-		types: ["Steel", "Ghost"],
+		types: ["Water", "Poison"],
 		baseStats: {hp: 60, atk: 140, def: 50, spa: 140, spd: 50, spe: 60},
 		abilities: {0: "Stance Change"},
 		heightm: 1.7,
@@ -16261,6 +16261,72 @@ let BattlePokedex = {
 		eggGroups: ["Undiscovered"],
 		gen: 5,
 	},
+
+	//League of Legends
+
+	
+	alistar: {
+		num: -1005,
+		name: "Alistar",
+		types: ["Fighting", "Ground"],
+		gender: "M",
+		baseStats: {hp: 75, atk: 100, def: 95, spa: 40, spd: 70, spe: 110},
+		abilities: {0: "Intimidate"},
+		heightm: 1.4,
+		weightkg: 88.4,
+		color: "Brown",
+		eggGroups: ["Field"],
+	},
+	amumu: {
+		num: -1006,
+		name: "Amumu",
+		types: ["Ghost", "Ground"],
+		baseStats: {hp: 65, atk: 55, def: 115, spa: 100, spd: 40, spe: 60},
+		abilities: {0: "Chlorophyll"},
+		heightm: 1,
+		weightkg: 35,
+		color: "Blue",
+		eggGroups: ["Undiscovered"],
+	},
+	anivia: {
+		num: -1007,
+		name: "Anivia",
+		types: ["Ice", "Flying"],
+		gender: "N",
+		baseStats: {hp: 90, atk: 85, def: 100, spa: 95, spd: 125, spe: 85},
+		abilities: {0: "Pressure"},
+		heightm: 1.7,
+		weightkg: 55.4,
+		color: "Blue",
+		eggGroups: ["Undiscovered"],
+	},
+	
+	ezreal: {
+		num: -1028,
+		name: "Ezreal",
+		types: ["Normal", "Electric"],
+		genderRatio: {M: 0.875, F: 0.125},
+		baseStats: {hp: 70, atk: 110, def: 70, spa: 115, spd: 70, spe: 90},
+		abilities: {0: "Steadfast"},
+		heightm: 1.2,
+		weightkg: 54,
+		color: "Blue",
+		eggGroups: ["Undiscovered"],
+	},
+	garen: {
+		num: -1034,
+		name: "Garen",
+		types: ["Grass", "Steel"],
+		genderRatio: {M: 0.875, F: 0.125},
+		baseStats: {hp: 88, atk: 107, def: 122, spa: 74, spd: 75, spe: 64},
+		abilities: {0: "Overgrow"},
+		heightm: 1.6,
+		weightkg: 90,
+		color: "Green",
+		eggGroups: ["Undiscovered"],
+	},
+
+
 };
 
 exports.BattlePokedex = BattlePokedex;
