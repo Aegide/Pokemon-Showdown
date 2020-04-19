@@ -78417,34 +78417,34 @@ let BattleLearnsets = {
 	// League of Legends
 
 	alistar: {
-		eventData: [
-			{generation: 5, level: 1, moves: ["headbutt"]},
-		],
+		learnset: {
+			headbutt: ["7M"]
+		}
 	},
 
 	amumu: {
-		eventData: [
-			{generation: 5, level: 1, moves: ["vinewhip"]},
-		],
+		learnset: {
+			vinewhip: ["7M"]
+		}
 	},
 
 
 	anivia: {
-		eventData: [
-			{generation: 5, level: 1, moves: ["blizzard"]},
-		],
+		learnset: {
+			blizzard: ["7M"]
+		}
 	},
 
 	ezreal: {
-		eventData: [
-			{generation: 5, level: 1, moves: ["aurasphere"]},
-		],
+		learnset: {
+			aurasphere: ["7M"]
+		}
 	},
 
 	garen: {
-		eventData: [
-			{generation: 5, level: 100, moves: ["sacredsword"]},
-		],
+		learnset: {
+			sacredsword: ["7M"]
+		}
 	},
 
 
