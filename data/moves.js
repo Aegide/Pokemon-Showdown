@@ -21491,6 +21491,394 @@ let BattleMovedex = {
 		type: "Electric",
 		contestType: "Cool",
 	},
+
+
+
+	//League of legends
+
+
+	//Alistar
+	pulverize: {
+		num: 0,
+		accuracy: 100,
+		basePower: 80,
+		category: "Physical",
+		desc: "Has a 100% chance to lower the target's Speed by 1 stage.",
+		shortDesc: "100% chance to lower the target's Speed by 1.",
+		id: "pulverize",
+		isViable: true,
+		name: "Pulverize",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		secondary: {
+			chance: 100,
+			boosts: {
+				spe: -1,
+			},
+		},
+		target: "normal",
+		type: "Grass",
+	},
+	headbutt_alistar: {
+		num: 0,
+		accuracy: 100,
+		basePower: 70,
+		category: "Physical",
+		desc: "Has a 30% chance to flinch the target.",
+		shortDesc: "30% chance to flinch the target.",
+		id: "headbutt_alistar",
+		name: "Headbutt-A",
+		pp: 15,
+		priority: 0,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		secondary: {
+			chance: 30,
+			volatileStatus: 'flinch',
+		},
+		target: "normal",
+		type: "Normal",
+	},
+	trample: {
+		num: 0,
+		accuracy: 100,
+		basePower: 60,
+		category: "Physical",
+		desc: "Has a 30% chance to flinch the target.",
+		shortDesc: "30% chance to flinch the target.",
+		id: "trample",
+		name: "Trample",
+		pp: 25,
+		priority: 0,
+		flags: {bite: 1, contact: 1, protect: 1, mirror: 1},
+		secondary: {
+			chance: 30,
+			volatileStatus: 'flinch',
+		},
+		target: "normal",
+		type: "Dark",
+		contestType: "Tough",
+	},
+	unbreakablewill: {
+		num: 0,
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "The user is protected from most attacks made by other Pokemon during this turn. This move has a 1/X chance of being successful, where X starts at 1 and triples each time this move is successfully used. X resets to 1 if this move fails, if the user's last move used is not Baneful Bunker, Detect, Endure, King's Shield, Obstruct, Protect, Quick Guard, Spiky Shield, or Wide Guard, or if it was one of those moves and the user's protection was broken. Fails if the user moves last this turn.",
+		shortDesc: "Prevents moves from affecting the user this turn.",
+		id: "unbreakablewill",
+		isViable: true,
+		name: "Unbreakable Will",
+		pp: 10,
+		priority: 4,
+		flags: {},
+		stallingMove: true,
+		volatileStatus: 'protect',
+		onPrepareHit(pokemon) {
+			return !!this.queue.willAct() && this.runEvent('StallMove', pokemon);
+		},
+		onHit(pokemon) {
+			pokemon.addVolatile('stall');
+		},
+		effect: {
+			duration: 1,
+			onStart(target) {
+				this.add('-singleturn', target, 'Protect');
+			},
+			onTryHitPriority: 3,
+			onTryHit(target, source, move) {
+				if (!move.flags['protect']) {
+					if (move.isZ || move.isMax) target.getMoveHitData(move).zBrokeProtect = true;
+					return;
+				}
+				if (move.smartTarget) {
+					move.smartTarget = false;
+				} else {
+					this.add('-activate', target, 'move: Protect');
+				}
+				let lockedmove = source.getVolatile('lockedmove');
+				if (lockedmove) {
+					// Outrage counter is reset
+					if (source.volatiles['lockedmove'].duration === 2) {
+						delete source.volatiles['lockedmove'];
+					}
+				}
+				return this.NOT_FAIL;
+			},
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+		zMoveEffect: 'clearnegativeboost',
+		contestType: "Cute",
+	},
+
+	//Anivia
+	flashfrost: {
+		num: 0,
+		accuracy: 100,
+		basePower: 90,
+		category: "Special",
+		desc: "Has a 10% chance to freeze the target.",
+		shortDesc: "10% chance to freeze the target.",
+		id: "flashfrost",
+		isViable: true,
+		name: "Flash Frost",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		secondary: {
+			chance: 10,
+			status: 'frz',
+		},
+		target: "normal",
+		type: "Ice",
+		contestType: "Beautiful",
+	},
+	crystallize: {
+		num: 0,
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "The user and its party members are protected from moves made by other Pokemon, including allies, during this turn that target all adjacent foes or all adjacent Pokemon. This move modifies the same 1/X chance of being successful used by other protection moves, where X starts at 1 and triples each time this move is successfully used, but does not use the chance to check for failure. X resets to 1 if this move fails, if the user's last move used is not Baneful Bunker, Detect, Endure, King's Shield, Obstruct, Protect, Quick Guard, Spiky Shield, or Wide Guard, or if it was one of those moves and the user's protection was broken. Fails if the user moves last this turn or if this move is already in effect for the user's side.",
+		shortDesc: "Protects allies from multi-target moves this turn.",
+		id: "crystallize",
+		name: "Crystallize",
+		pp: 10,
+		priority: 3,
+		flags: {snatch: 1},
+		sideCondition: 'wideguard',
+		onTryHitSide(side, source) {
+			return !!this.queue.willAct();
+		},
+		onHitSide(side, source) {
+			source.addVolatile('stall');
+		},
+		effect: {
+			duration: 1,
+			onStart(target, source) {
+				this.add('-singleturn', source, 'Wide Guard');
+			},
+			onTryHitPriority: 4,
+			onTryHit(target, source, move) {
+				// Wide Guard blocks all spread moves
+				if (move && move.target !== 'allAdjacent' && move.target !== 'allAdjacentFoes') {
+					return;
+				}
+				if (move.isZ || move.isMax) {
+					target.getMoveHitData(move).zBrokeProtect = true;
+					return;
+				}
+				this.add('-activate', target, 'move: Wide Guard');
+				let lockedmove = source.getVolatile('lockedmove');
+				if (lockedmove) {
+					// Outrage counter is reset
+					if (source.volatiles['lockedmove'].duration === 2) {
+						delete source.volatiles['lockedmove'];
+					}
+				}
+				return this.NOT_FAIL;
+			},
+		},
+		secondary: null,
+		target: "allySide",
+		type: "Rock",
+		zMoveBoost: {def: 1},
+		contestType: "Tough",
+	},
+	frostbite: {
+		num: 0,
+		accuracy: 100,
+		basePower: 90,
+		category: "Special",
+		desc: "Has a 10% chance to freeze the target.",
+		shortDesc: "10% chance to freeze the target.",
+		id: "frostbite",
+		isViable: true,
+		name: "Frostbite",
+		pp: 10,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		secondary: {
+			chance: 10,
+			status: 'frz',
+		},
+		target: "normal",
+		type: "Ice",
+		contestType: "Beautiful",
+	},
+	glacialstorm: {
+		num: 0,
+		accuracy: true,
+		basePower: 0,
+		category: "Status",
+		desc: "For 5 turns, the weather becomes Hail. At the end of each turn except the last, all active Pokemon lose 1/16 of their maximum HP, rounded down, unless they are an Ice type or have the Ice Body, Magic Guard, Overcoat, or Snow Cloak Abilities. Lasts for 8 turns if the user is holding Icy Rock. Fails if the current weather is Hail.",
+		shortDesc: "For 5 turns, hail crashes down.",
+		id: "glacialstorm",
+		name: "Glacial Storm",
+		pp: 10,
+		priority: 0,
+		flags: {},
+		weather: 'hail',
+		secondary: null,
+		target: "all",
+		type: "Ice",
+		zMoveBoost: {spe: 1},
+		contestType: "Beautiful",
+	},
+
+	//Amumu
+	bandagetoss: {
+		num: 0,
+		accuracy: 100,
+		basePower: 40,
+		category: "Physical",
+		desc: "Has a 100% chance to flinch the target. Fails unless it is the user's first turn on the field.",
+		shortDesc: "Hits first. First turn out only. 100% flinch chance.",
+		id: "bandagetoss",
+		isViable: true,
+		name: "Bandage Toss",
+		pp: 10,
+		priority: 3,
+		flags: {contact: 1, protect: 1, mirror: 1},
+		onTry(pokemon, target) {
+			if (pokemon.activeMoveActions > 1) {
+				this.attrLastMove('[still]');
+				this.add('-fail', pokemon);
+				this.hint("Fake Out only works on your first turn out.");
+				return null;
+			}
+		},
+		secondary: {
+			chance: 100,
+			volatileStatus: 'flinch',
+		},
+		target: "normal",
+		type: "Normal",
+		contestType: "Cute",
+	},
+	despair: {
+		num: 0,
+		accuracy: 100,
+		basePower: 0,
+		category: "Status",
+		desc: "Lowers the target's Special Defense by 2 stages.",
+		shortDesc: "Lowers the target's Sp. Def by 2.",
+		id: "despair",
+		name: "Despair",
+		pp: 20,
+		priority: 0,
+		flags: {protect: 1, reflectable: 1, mirror: 1, mystery: 1},
+		boosts: {
+			spd: -2,
+		},
+		secondary: null,
+		target: "normal",
+		type: "Dark",
+		zMoveBoost: {spa: 1},
+		contestType: "Cute",
+	},
+	tantrum: {
+		num: 0,
+		accuracy: true,
+		basePower: 0,
+		category: "Physical",
+		desc: "The user spends two turns locked into this move and then, on the second turn after using this move, the user attacks the last Pokemon that hit it, inflicting double the damage in HP it lost to attacks during the two turns. If the last Pokemon that hit it is no longer active, the user attacks a random opposing Pokemon instead. If the user is prevented from moving during this move's use, the effect ends. This move does not check accuracy and does not ignore type immunity.",
+		shortDesc: "Waits 2 turns; deals double the damage taken.",
+		id: "tantrum",
+		isNonstandard: "Past",
+		name: "Tantrum",
+		pp: 10,
+		priority: 1,
+		flags: {contact: 1, protect: 1},
+		volatileStatus: 'bide',
+		ignoreImmunity: true,
+		beforeMoveCallback(pokemon) {
+			if (pokemon.volatiles['bide']) return true;
+		},
+		effect: {
+			duration: 3,
+			onLockMove: 'bide',
+			onStart(pokemon) {
+				this.effectData.totalDamage = 0;
+				this.add('-start', pokemon, 'move: Bide');
+			},
+			onDamagePriority: -101,
+			onDamage(damage, target, source, move) {
+				if (!move || move.effectType !== 'Move' || !source) return;
+				this.effectData.totalDamage += damage;
+				this.effectData.lastDamageSource = source;
+			},
+			onBeforeMove(pokemon, target, move) {
+				if (this.effectData.duration === 1) {
+					this.add('-end', pokemon, 'move: Bide');
+					target = this.effectData.lastDamageSource;
+					if (!target || !this.effectData.totalDamage) {
+						this.attrLastMove('[still]');
+						this.add('-fail', pokemon);
+						return false;
+					}
+					if (!target.isActive) {
+						const possibleTarget = this.getRandomTarget(pokemon, this.dex.getMove('pound'));
+						if (!possibleTarget) {
+							this.add('-miss', pokemon);
+							return false;
+						}
+						target = possibleTarget;
+					}
+					let moveData = {
+						id: 'bide',
+						name: "Bide",
+						accuracy: true,
+						damage: this.effectData.totalDamage * 2,
+						category: "Physical",
+						priority: 1,
+						flags: {contact: 1, protect: 1},
+						effectType: 'Move',
+						type: 'Normal',
+					};
+					// @ts-ignore
+					this.tryMoveHit(target, pokemon, moveData);
+					return false;
+				}
+				this.add('-activate', pokemon, 'move: Bide');
+			},
+			onMoveAborted(pokemon) {
+				pokemon.removeVolatile('bide');
+			},
+			onEnd(pokemon) {
+				this.add('-end', pokemon, 'move: Bide', '[silent]');
+			},
+		},
+		secondary: null,
+		target: "self",
+		type: "Normal",
+		contestType: "Tough",
+	},
+	curseofthesadmummy: {
+		num: 0,
+		accuracy: 100,
+		basePower: 250,
+		category: "Physical",
+		desc: "The user faints after using this move, even if this move fails for having no target. This move is prevented from executing if any active Pokemon has the Damp Ability.",
+		shortDesc: "Hits adjacent Pokemon. The user faints.",
+		id: "curseofthesadmummy",
+		isViable: true,
+		name: "Curse of the Sad Mummy",
+		pp: 5,
+		priority: 0,
+		flags: {protect: 1, mirror: 1},
+		selfdestruct: "always",
+		secondary: null,
+		target: "allAdjacent",
+		type: "Normal",
+		contestType: "Beautiful",
+	},
+
+
+
+
+
 };
 
 exports.BattleMovedex = BattleMovedex;
