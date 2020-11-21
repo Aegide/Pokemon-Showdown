@@ -75863,4 +75863,40 @@ export const Learnsets: {[speciesid: string]: LearnsetData} = {
 		],
 		eventOnly: true,
 	},
+
+
+	// League of Legends
+
+	alistar: {
+		learnset: {
+			headbutt: ["7M"]
+		}
+	},
+
+	amumu: {
+		learnset: {
+			vinewhip: ["7M"]
+		}
+	},
+
+
+	anivia: {
+		learnset: {
+			blizzard: ["7M"]
+		}
+	},
+
+	ezreal: {
+		learnset: {
+			aurasphere: ["7M"]
+		}
+	},
+
+	garen: {
+		learnset: {
+			sacredsword: ["7M"]
+		}
+	},
+
+
 };
